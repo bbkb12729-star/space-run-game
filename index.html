@@ -7,6 +7,32 @@
 <style>*{margin:0;padding:0;box-sizing:border-box}body{background:#030314;overflow:hidden}#root{width:100vw;min-height:100vh;display:flex;align-items:center;justify-content:center}#loading{position:fixed;inset:0;background:#030314;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:99999;font-family:'Courier New',monospace;transition:opacity 0.5s}</style>
 </head>
 <body>
+
+<div id="splash" style="position:fixed;inset:0;background:#000;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:99998;cursor:pointer;font-family:'Courier New',monospace;">
+  <div style="color:#ffe880;font-size:clamp(32px,8vw,72px);font-weight:700;letter-spacing:0.2em;text-shadow:0 0 40px rgba(255,232,100,.8);margin-bottom:16px">SPACE RUN</div>
+  <div style="color:#ffffff33;font-size:clamp(10px,2vw,14px);letter-spacing:4px;margin-bottom:48px">КОСМИЧЕСКИЙ РАННЕР</div>
+  <div id="tap_hint" style="color:#00eaff;font-size:clamp(13px,2.5vw,18px);letter-spacing:3px;animation:tap_pulse 1.5s ease-in-out infinite">НАЖМИТЕ ДЛЯ НАЧАЛА</div>
+  <style>@keyframes tap_pulse{0%,100%{opacity:.4}50%{opacity:1}}</style>
+</div>
+<script>
+document.getElementById('splash').addEventListener('click', function() {
+  // Пользователь тапнул — запускаем музыку и убираем сплэш
+  const a = new Audio('intro.mp3');
+  a.volume = 0.8;
+  a.play().catch(()=>{});
+  window._gameAudio = a;
+  document.getElementById('splash').style.display = 'none';
+}, {once: true});
+document.getElementById('splash').addEventListener('touchstart', function(e) {
+  e.preventDefault();
+  const a = new Audio('intro.mp3');
+  a.volume = 0.8;
+  a.play().catch(()=>{});
+  window._gameAudio = a;
+  document.getElementById('splash').style.display = 'none';
+}, {once: true, passive: false});
+</script>
+
 <div id="loading">
   <div style="color:#00eaff;font-size:22px;letter-spacing:6px;margin-bottom:12px">SPACE RUN</div>
   <div id="ltxt" style="color:#ffffff44;font-size:11px;letter-spacing:3px;margin-bottom:20px">LOADING...</div>
@@ -44,5 +70,10 @@ s.onload=function(){
 s.onerror=()=>{ltxt.textContent='NETWORK ERROR';};
 document.head.appendChild(s);
 </script>
+
+
+
+
+
 </body>
 </html>
